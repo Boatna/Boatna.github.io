@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>คำนวณการใช้พลังงานแอร์และแผงโซลาร์เซลล์</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>คำนวณการใช้พลังงานแอร์และแผงโซลาร์เซลล์</h1>
+      <button class="mode-switch" onclick="toggleDarkMode()">โหมดกลางคืน</button>
+    </header>
+    <section class="form-section">
+      <div class="form-group">
+        <label for="acType">เลือกประเภทแอร์:</label>
+        <select id="acType" onchange="updateACSpecs()">
+          <option value="CWCE13I-AF1M">CWCE13I-AF1M</option>
+          <option value="CWCE19I-AF1M">CWCE19I-AF1M</option>
+          <option value="CWCE25I-AF1M">CWCE25I-AF1M</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="btu">ปริมาณความเย็น (ฺBTU):</label>
+        <input type="number" id="btu" readonly>
+      </div>
+      <div class="form-group">
+        <label for="power">กำลังไฟฟ้า (วัตต์):</label>
+        <input type="number" id="power" readonly>
+      </div>
+      <div class="form-group">
+        <label for="numUnits">จำนวนเครื่องปรับอากาศ:</label>
+        <input type="number" id="numUnits">
+      </div>
+      <div class="form-group">
+        <label for="starRating">ดาวเบอร์ 5 (การประหยัดพลังงาน):</label>
+        <input type="checkbox" id="starRating">
+      </div>
+      <button class="calculate-btn" onclick="calculate()">คำนวณ</button>
+    </section>
+
+    <section class="result-section">
+      <h2>ผลการคำนวณ:</h2>
+      <div class="result-box">
+        <p>จำนวนแผงโซลาร์เซลล์ที่ใช้: <span id="numPanels"></span> แผง</p>
+        <p>จำนวนแผงโซลาร์เซลล์ที่ใช้ถึง 100%: <span id="panelsTo100"></span> แผง</p>
+      </div>
+      <div id="result" class="result-message">
+        <p>ผลการคำนวณเรียบร้อยแล้ว!</p>
+      </div>
+      <div class="download-button">
+        <button onclick="downloadResultAsImage()">ดาวน์โหลดผลการคำนวณ</button>
+      </div>      
+      </div>
+    </section>
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
