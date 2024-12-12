@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculate solar panels</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="snowfall.css">
+  <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;700&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+</head>
+<div class="snow">
+  <!-- Snowflakes will appear here -->
+  <div class="flake"></div>
+  <div class="flake"></div>
+  <!-- Repeat for more flakes -->
+</div>
+<div class="container">
+  <!-- แถบสีฟ้าเป็นรูปสามเหลี่ยมที่มุมซ้ายบน -->
+  <div class="triangle"></div>
+  <!-- รูปมาสคอตที่มุมขวาล่าง -->
+  <img src="mascot.png" alt="มาสคอต" class="mascot">
+<body>
+  <div class="form-section">
+    <h1>Calculate solar panels</h1>
+    <label for="acType">ชนิดแอร์</label>
+    <select id="acType" onchange="calculate()">
+      <option value="CWCE13I-AF1M">CWCE13I-AF1M</option>
+      <option value="CWCE19I-AF1M">CWCE19I-AF1M</option>
+      <option value="CWCE25I-AF1M">CWCE25I-AF1M</option>
+    </select>
+    <br><br>
+
+    <label for="solarPanelW">ขนาดแผงโซลาร์เซลล์ (W)</label>
+    <select id="solarPanelW" onchange="calculate()">
+      <option value="100">100 W</option>
+      <option value="200">200 W</option>
+      <option value="250">250 W</option>
+      <option value="285">285 W</option>
+      <option value="300">300 W</option>
+      <option value="340">340 W</option>
+      <option value="350">350 W</option>
+      <option value="400">400 W</option>
+      <option value="450">450 W</option>
+      <option value="500">500 W</option>
+      <option value="550">550 W</option>
+      <option value="600">600 W</option>
+      <option value="650">650 W</option>
+      <option value="650">700 W</option>
+    </select>
+    <br><br>
+
+    <div id="result" class="result-section">
+      <h2>ผลการคำนวณ:</h2>
+      <p>กำลังไฟฟ้าแอร์ (วัตต์): <span id="acPower">0</span> วัตต์</p>
+      <p>ปริมาณความเย็น (BTU): <span id="btu">0</span> BTU</p>
+      <p>
+        <label for="numPanels">จำนวนแผงโซลาร์เซลล์ที่ต้องใช้:</label>
+        <input type="number" id="numPanels" value="0" min="0" onchange="recalculateBasedOnPanels()">
+      </p>
+      <p>กำลังไฟฟ้ารวมของแผงโซลาร์เซลล์: <span id="totalSolarPower">0</span> วัตต์</p>
+      <p>กำลังไฟฟ้าที่แผงโซลาร์เซลล์ผลิตได้ (%): <span id="percentage">0</span></p>
+      <p>จำนวนแผงโซลาร์เซลล์ที่ต้องเพิ่มให้ถึง 100%: <span id="panelsTo100">0</span> แผง</p>
+    </div>
+    <br>
+    <button onclick="downloadResultAsImage()">ดาวน์โหลดผลลัพธ์</button>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
