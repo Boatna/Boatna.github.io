@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculate Solar Hybrid Air</title>
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;700&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+</head>
+<body>
+  <div class="container">
+    <div class="triangle"></div>
+    <img src="mascot.png" alt="มาสคอต" class="mascot">
+    <h1>Calculate Solar Hybrid Air</h1>
+    
+    <div class="form-section">
+      <img src="tasaki.png" alt="โลโก้ทาซากิ" class="tasaki">
+      <br><br>
+      
+      <label for="acType">Air Condition Model</label>
+      <select id="acType" onchange="calculate()">
+        <option value="CWCE13I-AF1M">CWCE13I-AF1M</option>
+        <option value="CWCE19I-AF1M">CWCE19I-AF1M</option>
+        <option value="CWCE25I-AF1M">CWCE25I-AF1M</option>
+      </select>
+      <br><br>
+
+      <div class="slider-container">
+        <label for="solarPanelSlider">ขนาดแผงโซลาร์เซลล์ (W): </label>
+        <input type="range" id="solarPanelSlider" min="100" max="2000" value="100" step="10">
+        <span id="solarPanelValue">100 W</span>
+      </div>
+
+      <br><br>
+
+      <div id="result" class="result-section">
+        <h2>ผลการคำนวณ:</h2>
+        <p>กำลังไฟฟ้าแอร์ (วัตต์): <span id="acPower">0</span> วัตต์</p>
+        <p>ปริมาณความเย็น (BTU): <span id="btu">0</span> BTU</p>
+        <p>
+          <label for="numPanels">จำนวนแผงโซลาร์เซลล์ที่ต้องใช้</label>
+          <input type="number" id="numPanels" value="0" min="0" onchange="recalculateBasedOnPanels()">
+        </p>
+        <p>กำลังไฟฟ้ารวมของแผงโซลาร์เซลล์: <span id="totalSolarPower">0</span> วัตต์</p>
+        <p>เปอร์เซ็นต์พลังงานที่รองรับ: <span id="percentage">0%</span></p>
+        <p>จำนวนแผงเพิ่มเติมที่ต้องการให้เต็มประสิทธิภาพ: <span id="panelsTo100">0</span></p>
+      </div>
+      <br>
+      <button onclick="downloadResultAsImage()">ดาวน์โหลดผลลัพธ์</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
