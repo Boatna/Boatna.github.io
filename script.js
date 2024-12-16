@@ -92,7 +92,7 @@ function handleSetChange() {
   changeDropdown(selectedSet);
 }
 
-// Function to handle AC model selection
+// ฟังก์ชันที่ทำงานเมื่อเลือกชุดแอร์
 function calculate() {
   const selectedModel = document.getElementById("acType").value;
 
@@ -102,7 +102,8 @@ function calculate() {
   // Get the selected solar panel power from the slider
   const solarPanelPower = parseInt(document.getElementById('solarPanelSlider').value); // ค่าจากสไลเดอร์
 
-  let numPanels = 0;
+  let minPanels = 0;
+  let maxPanels = 0;
   let acPower = 0;
   let btu = 0;
   let totalSolarPower = 0;
@@ -114,10 +115,11 @@ function calculate() {
     btu = acData.btu;
 
     // คำนวณจำนวนแผงที่ต้องใช้
-    numPanels = Math.ceil(acPower / solarPanelPower); // คำนวณจำนวนแผงที่ต้องใช้จากค่าพลังงานที่แผงผลิตได้
+    minPanels = Math.ceil(acPower / solarPanelPower); // คำนวณจำนวนแผงที่ต้องใช้จากค่าพลังงานที่แผงผลิตได้
+    maxPanels = Math.ceil((acPower + solarPanelPower - 1) / solarPanelPower); // คำนวณจำนวนแผงที่ต้องใช้จากพลังงานสูงสุดที่แอร์ต้องการ
 
     // คำนวณการประหยัดพลังงาน
-    totalSolarPower = numPanels * solarPanelPower;
+    totalSolarPower = maxPanels * solarPanelPower;
     savingPercentage = ((totalSolarPower - acPower) / totalSolarPower) * 100;
   } else {
     // ถ้าไม่ได้เลือกแอร์ ให้แสดงค่าเป็น 0
@@ -128,7 +130,7 @@ function calculate() {
   }
 
   // แสดงผลลัพธ์
-  updateResult(numPanels, acPower, btu, totalSolarPower, savingPercentage);
+  updateResult(minPanels, maxPanels, acPower, btu, totalSolarPower, savingPercentage);
 }
 
 // Event listener for AC model selection change
@@ -141,8 +143,9 @@ document.getElementById('solarPanelSlider').addEventListener('input', () => {
 });
 
 // Update result display
-function updateResult(numPanels, acPower, btu, totalSolarPower, savingPercentage) {
-  document.getElementById("numPanels").textContent = numPanels || '0';
+function updateResult(minPanels, maxPanels, acPower, btu, totalSolarPower, savingPercentage) {
+  // แสดงช่วงของจำนวนแผงโซลาร์เซลล์
+  document.getElementById("numPanels").textContent = `${minPanels}-${maxPanels} แผ่น`;
   document.getElementById('acPower').textContent = acPower || '0';
   document.getElementById('btu').textContent = btu || '0';
   document.getElementById('totalSolarPower').textContent = totalSolarPower || '0';
@@ -154,3 +157,4 @@ window.onload = () => {
   changeDropdown('set1'); // โหลดข้อมูลชุดแอร์เริ่มต้น
   calculate(); // คำนวณค่าเริ่มต้นเมื่อโหลดหน้า
 };
+
