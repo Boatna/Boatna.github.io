@@ -13,11 +13,6 @@ html, body {
   font-family: 'LT_46521TH', sans-serif;
   background-color: #f8faff;
   font-size: 16px;
-}
-
-body, h1, h2, p, ul, ol, li, button {
-  margin: 0;
-  padding: 0;
   color: #0056b3;
   line-height: 1.8;
 }
@@ -34,7 +29,7 @@ h1 {
 }
 
 h2 {
-  font-size: 2rem;
+  font-size: 1.8rem;
   margin-bottom: 15px;
 }
 
@@ -69,17 +64,17 @@ label {
 }
 
 input[type="number"], select {
-  width: 90%;
+  width: 100%;
   padding: 12px;
   margin-bottom: 20px;
   border: 1px solid #0056b3;
   border-radius: 8px;
-  font-size: 1.2rem;
+  font-size: 1rem;
   transition: border-color 0.3s ease;
 }
 
 input[type="number"]:focus, select:focus {
-  border-color: #0056b3;
+  border-color: #004a99;
   outline: none;
 }
 
@@ -113,7 +108,7 @@ button:hover {
 
 .result-section h2 {
   margin-bottom: 15px;
-  font-size: 1.8rem;
+  font-size: 1.6rem;
 }
 
 .result-section p {
@@ -121,24 +116,22 @@ button:hover {
   font-size: 1.2rem;
 }
 
+/* การจัดการภาพ */
 .tasaki {
-  left: 25%;
-  display: flex; /* ใช้ Flexbox */
-  justify-content: center; /* จัดให้อยู่ตรงกลางแนวนอน */
-  align-items: center; /* จัดให้อยู่ตรงกลางแนวตั้ง */
-  width: 50%; /* กำหนดให้ครอบคลุมความกว้างของพื้นที่ */
-  height: auto; /* ความสูงปรับตามเนื้อหา */
-  position: relative; /* ใช้สำหรับจัดตำแหน่ง */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50%;
+  margin: 0 auto;
 }
 
 .tasaki img {
-  width: 12.5%; /* ปรับขนาดรูปภาพโดยตรงเป็น 12.5% ของพื้นที่ */
-  height: auto; /* รักษาสัดส่วนของรูปภาพ */
-  margin: 0 auto; /* จัดให้อยู่ตรงกลางในแนวนอน */
+  width: 12.5%;
+  height: auto;
+  margin: 0 auto;
 }
 
-
-
+/* Slider */
 .slider-container {
   width: 80%;
   max-width: 600px;
@@ -150,35 +143,33 @@ button:hover {
   text-align: center;
 }
 
-/* Styling for the label */
 .slider-container label {
   display: block;
-  font-size: 16px;
+  font-size: 1rem;
   margin-bottom: 10px;
   color: #0056b3;
 }
 
-/* Styling for the range input */
 .slider-container input[type="range"] {
-  width: 70%;
-  margin: 0;
+  width: 100%;
   height: 8px;
   border-radius: 5px;
+  background: #ddd;
   outline: none;
+  transition: background 0.3s ease;
 }
 
-/* Styling for the range input when hovered */
 .slider-container input[type="range"]:hover {
   background: #0056b3;
 }
 
-/* Styling for the value text */
 .slider-container span {
   display: block;
   margin-top: 10px;
-  font-size: 18px;
+  font-size: 1.1rem;
   color: #0056b3;
 }
+
 #result {
   margin-top: 20px;
 }
@@ -190,23 +181,27 @@ button:hover {
 
 /* ความเข้ากันได้กับหน้าจอขนาดเล็ก */
 @media (max-width: 600px) {
-  body {
-    padding: 10px;
-  }
-
   .form-section {
     padding: 15px;
   }
 
   h1 {
-    font-size: 2rem;
+    font-size: 1.8rem;
   }
 
   h2 {
-    font-size: 1.6rem;
+    font-size: 1.5rem;
   }
 
   p {
+    font-size: 1rem;
+  }
+
+  input[type="number"], select {
+    font-size: 0.9rem;
+  }
+
+  button {
     font-size: 1rem;
   }
 }
