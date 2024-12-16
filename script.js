@@ -34,17 +34,13 @@ const acPowerMap = {
 };
 
 // Dynamic dropdown change function
-function changeDropdown(set) {
-  const acType = document.getElementById('acType');
-  acType.innerHTML = ''; // Clear existing options
-
   // Define sets of options
   const sets = {
     set1: [
       { value: '', text: '-- กรุณาเลือก --' },
       { value: 'FWCE13I-AF1M', text: 'FWCE13I-AF1M' },
       { value: 'FWCE19I-AF1M', text: 'FWCE19I-AF1M' },
-      { value: 'FWCE25I-AF1M', text: 'FWCE25I-AF1M' }
+      { value: 'FWCE25I-AF1M', text: 'FWCE25I-AF1M' },
     ],
     set2: [
       { value: '', text: '-- กรุณาเลือก --' },
@@ -57,7 +53,7 @@ function changeDropdown(set) {
       { value: 'FUNE44I-AF2', text: 'FUNE44I-AF2' },
       { value: 'FUNE48I-AF2', text: 'FUNE48I-AF2' },
       { value: 'FUNE56I-AF2', text: 'FUNE56I-AF2' },
-      { value: 'FUNE60I-AF2', text: 'FUNE60I-AF2' }
+      { value: 'FUNE60I-AF2', text: 'FUNE60I-AF2' },
     ],
     set3: [
       { value: '', text: '-- กรุณาเลือก --' },
@@ -70,11 +66,15 @@ function changeDropdown(set) {
       { value: 'FUNE44I-AF2', text: 'FUNE44I-AF2' },
       { value: 'FUNE48I-AF2', text: 'FUNE48I-AF2' },
       { value: 'FUNE56I-AF2', text: 'FUNE56I-AF2' },
-      { value: 'FUNE60I-AF2', text: 'FUNE60I-AF2' }
+      { value: 'FUNE60I-AF2', text: 'FUNE60I-AF2' },
     ]
   };
 
-  // Populate dropdown with selected set
+// ฟังก์ชันเปลี่ยนตัวเลือกใน dropdown ของ acType
+function changeDropdown(set) {
+  const acType = document.getElementById('acType');
+  acType.innerHTML = ''; // ลบตัวเลือกเก่า
+
   const selectedSet = sets[set];
   selectedSet.forEach(option => {
     const opt = document.createElement('option');
@@ -82,82 +82,75 @@ function changeDropdown(set) {
     opt.textContent = option.text;
     acType.appendChild(opt);
   });
+
+  calculate(); // เรียกใช้ฟังก์ชันคำนวณใหม่เมื่อมีการเปลี่ยนตัวเลือก
 }
 
-// Handle AC set change
+// ฟังก์ชันที่ทำงานเมื่อเลือกชุดแอร์
 function handleSetChange() {
-  const selectedSet = document.getElementById('acSet').value;
+  const selectedSet = document.getElementById('acSystemType').value;
   changeDropdown(selectedSet);
-  calculate(); // Recalculate when dropdown changes
 }
 
-// Main calculation function
+// Function to handle AC model selection
 function calculate() {
-  const acType = document.getElementById('acType').value;
-  const solarPanelW = parseInt(document.getElementById('solarPanelSlider').value) || 0;
+  const selectedModel = document.getElementById("acType").value;
 
-  // Validate inputs
-  if (!acType || solarPanelW <= 0) {
-    updateResult('กรุณากรอกข้อมูลทั้งหมด', '-', '-', '-');
-    document.getElementById('condensingUnit').textContent = ''; // Clear Condensing Unit
-    return;
-  }
+  // Get the selected AC unit data from the map
+  const acData = acPowerMap[selectedModel];
+  
+  // Get the selected solar panel power from the slider
+  const solarPanelPower = parseInt(document.getElementById('solarPanelSlider').value); // ค่าจากสไลเดอร์
 
-  const acData = acPowerMap[acType];
-  if (!acData) {
-    updateResult('ไม่พบข้อมูลแอร์ที่เลือก', '-', '-', '-');
-    document.getElementById('condensingUnit').textContent = ''; // Clear Condensing Unit
-    return;
-  }
+  let numPanels = 0;
+  let acPower = 0;
+  let btu = 0;
+  let totalSolarPower = 0;
+  let savingPercentage = 0;
 
-  const { power: acPower, btu, condensingUnit } = acData;
+  if (acData) {
+    // คำนวณพลังงานที่แอร์ใช้
+    acPower = acData.power;
+    btu = acData.btu;
 
-  // Update Condensing Unit display
-  if (condensingUnit) {
-    document.getElementById('condensingUnit').textContent = `CONDENSING UNIT ชุดระบายความร้อน: ${condensingUnit}`;
+    // คำนวณจำนวนแผงที่ต้องใช้
+    numPanels = Math.ceil(acPower / solarPanelPower); // คำนวณจำนวนแผงที่ต้องใช้จากค่าพลังงานที่แผงผลิตได้
+
+    // คำนวณการประหยัดพลังงาน
+    totalSolarPower = numPanels * solarPanelPower;
+    savingPercentage = ((totalSolarPower - acPower) / totalSolarPower) * 100;
   } else {
-    document.getElementById('condensingUnit').textContent = ''; // Clear if not available
+    // ถ้าไม่ได้เลือกแอร์ ให้แสดงค่าเป็น 0
+    acPower = 0;
+    btu = 0;
+    totalSolarPower = 0;
+    savingPercentage = 0;
   }
 
-  // Calculate the minimum number of panels
-  const minPanels = Math.ceil(acPower / solarPanelW);
-  const maxPanels = minPanels + 2;  // Adding some flexibility for the max panels
-
-  // Calculate the total power for both min and max number of panels
-  const minTotalSolarPower = minPanels * solarPanelW;
-  const maxTotalSolarPower = maxPanels * solarPanelW;
-
-  // Format the results
-  const formattedMinPanels = minPanels.toLocaleString();
-  const formattedMaxPanels = maxPanels.toLocaleString();
-  const formattedMinTotalSolarPower = minTotalSolarPower.toLocaleString();
-  const formattedMaxTotalSolarPower = maxTotalSolarPower.toLocaleString();
-  const formattedAcPower = acPower.toLocaleString();
-  const formattedBTU = btu.toLocaleString();
-
-  // Update the result section with the calculated values
-  updateResult(
-    `${formattedMinPanels}-${formattedMaxPanels}`,
-    formattedAcPower,
-    formattedBTU,
-    `${formattedMinTotalSolarPower}-${formattedMaxTotalSolarPower}`
-  );
+  // แสดงผลลัพธ์
+  updateResult(numPanels, acPower, btu, totalSolarPower, savingPercentage);
 }
+
+// Event listener for AC model selection change
+document.getElementById("acType").addEventListener("change", calculate);
+
+// Event listener for solar panel slider change
+document.getElementById('solarPanelSlider').addEventListener('input', () => {
+  document.getElementById('solarPanelValue').textContent = `${document.getElementById('solarPanelSlider').value} W`;
+  calculate(); // คำนวณใหม่เมื่อมีการเปลี่ยนค่า slider
+});
 
 // Update result display
-function updateResult(numPanels, acPower, btu, totalSolarPower) {
-  document.getElementById("numPanels").textContent = numPanels || '-';
-  document.getElementById('acPower').textContent = acPower || '-';
-  document.getElementById('btu').textContent = btu || '-';
-  document.getElementById('totalSolarPower').textContent = totalSolarPower || '-';
+function updateResult(numPanels, acPower, btu, totalSolarPower, savingPercentage) {
+  document.getElementById("numPanels").textContent = numPanels || '0';
+  document.getElementById('acPower').textContent = acPower || '0';
+  document.getElementById('btu').textContent = btu || '0';
+  document.getElementById('totalSolarPower').textContent = totalSolarPower || '0';
+  document.getElementById('savingPercentage').textContent = savingPercentage ? `ประหยัดไฟ: ${savingPercentage.toFixed(2)}%` : 'ประหยัดไฟ: 0%';
 }
 
-// Initialize the script on page load
+// เริ่มต้นเมื่อโหลดหน้า
 window.onload = () => {
-  changeDropdown('set1'); // Load initial dropdown content and perform calculation
-  const solarPanelSlider = document.getElementById('solarPanelSlider');
-  solarPanelSlider.addEventListener('input', () => {
-    document.getElementById('solarPanelValue').textContent = `${solarPanelSlider.value} W`;
-    calculate(); // Recalculate when slider changes
-  });
+  changeDropdown('set1'); // โหลดข้อมูลชุดแอร์เริ่มต้น
+  calculate(); // คำนวณค่าเริ่มต้นเมื่อโหลดหน้า
 };
