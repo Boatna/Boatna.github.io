@@ -27,6 +27,31 @@ h1 {
   font-size: 2rem;
   margin-bottom: 20px;
 }
+h4 {
+  font-size: 16px; /* ขนาดเล็กลง */
+  font-weight: bold;
+  color: red; /* สีแดง */
+  margin-bottom: 4px; /* ลดระยะห่างด้านล่าง */
+}
+
+/* ปรับสไตล์ของ h5 */
+h5 {
+  font-size: 14px; /* ขนาดเล็กลง */
+  font-weight: normal;
+  margin-top: 0; /* ลดระยะห่างด้านบน */
+  line-height: 1.4; /* เพิ่มความสูงของบรรทัดเพื่อป้องกันซ้อนกัน */
+  white-space: normal; /* ให้ข้อความขึ้นบรรทัดใหม่ได้ปกติ */
+}
+
+/* สไตล์ข้อความสีแดง */
+.red-note {
+  color: red;
+}
+
+/* สไตล์ข้อความสีดำ */
+.black-note {
+  color: black;
+}
 
 h2 {
   font-size: 1.8rem;
