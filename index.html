@@ -14,12 +14,25 @@
       <img src="tasaki.png" alt="โลโก้ทาซากิ" class="tasaki">
       <br>
       <h1>Calculate Solar Hybrid Air</h1>
-      <label for="acType">Air Condition Model</label>
+
+      <!-- Buttons for changing dropdown content -->
+      <label for="acSystemType">Air Condition Model</label>
+  <select id="acSystemType" onchange="changeDropdown(this.value)">
+    <option value="set1">Wall Type</option>
+    <option value="set2">Floor & Ceiling Suspended</option>
+    <option value="set3">4 Ways Ceiling Cassette</option>
+  </select>
+  <h3>Unit Model รุ่น</h3>
+      <label for="acType">FAN COIL UNIT ชุดเป่าลมเย็น</label>
       <select id="acType" onchange="calculate()">
+        <option value="">-- กรุณาเลือก --</option>
         <option value="CWCE13I-AF1M">CWCE13I-AF1M</option>
         <option value="CWCE19I-AF1M">CWCE19I-AF1M</option>
         <option value="CWCE25I-AF1M">CWCE25I-AF1M</option>
       </select>
+        <div id="condensingUnit" style="margin-top: 10px; color: #555;"></div>
+      </div>
+      
       
       <div class="slider-container">
         <label for="solarPanelSlider">ขนาดแผงโซลาร์เซลล์ (W) </label>
@@ -31,11 +44,7 @@
         <h2>ผลการคำนวณ:</h2>
         <p>กำลังไฟฟ้าแอร์ (วัตต์): <span id="acPower">0</span> วัตต์</p>
         <p>ปริมาณความเย็น (BTU): <span id="btu">0</span> BTU</p>
-        
-        <p>
-          <label for="numPanels">จำนวนแผงโซลาร์เซลล์ที่ต้องใช้</label>
-          <input type="number" id="numPanels" value="0" min="0" readonly>
-        </p>
+        <p>จำนวนแผงโซลาร์เซลล์ที่ต้องใช้ : <span id="numPanels">0</span> แผ่น</p>
         <p>กำลังไฟฟ้ารวมของแผงโซลาร์เซลล์: <span id="totalSolarPower">0</span> วัตต์</p>
       </div>
     </div>
