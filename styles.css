@@ -1,0 +1,306 @@
+/* โหลดฟอนต์ที่กำหนดเอง */
+@font-face {
+  font-family: 'LT_46521TH';
+  src: url('fonts/LT_46521TH.otf') format('opentype');
+  font-display: swap;
+}
+
+/* รีเซ็ตค่าพื้นฐาน */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: 'LT_46521TH', sans-serif;
+  background-color: #f8faff;
+  font-size: 16px;
+  color: #0056b3;
+  line-height: 1.8;
+}
+
+h1, h2 {
+  color: #0056b3;
+  font-weight: bold;
+  text-align: center;
+}
+
+h1 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+h4 {
+  font-size: 16px; /* ขนาดเล็กลง */
+  font-weight: bold;
+  color: red; /* สีแดง */
+  margin-bottom: 4px; /* ลดระยะห่างด้านล่าง */
+}
+
+/* ปรับสไตล์ของ h5 */
+h5 {
+  font-size: 14px; /* ขนาดเล็กลง */
+  font-weight: normal;
+  margin-top: 0; /* ลดระยะห่างด้านบน */
+  line-height: 1.4; /* เพิ่มความสูงของบรรทัดเพื่อป้องกันซ้อนกัน */
+  white-space: normal; /* ให้ข้อความขึ้นบรรทัดใหม่ได้ปกติ */
+}
+
+/* สไตล์ข้อความสีแดง */
+.red-note {
+  color: red;
+}
+
+/* สไตล์ข้อความสีดำ */
+.black-note {
+  color: rgb(255, 0, 0);
+}
+
+h2 {
+  font-size: 1.8rem;
+  margin-bottom: 15px;
+}
+
+p {
+  font-size: 1.2rem;
+  margin-bottom: 15px;
+}
+
+/* การจัดการ container */
+.container {
+  padding: 20px;
+  max-height: 100vh;
+  overflow-y: auto;
+}
+
+/* ฟอร์ม */
+.form-section {
+  max-width: 600px;
+  margin: 20px auto;
+  background-color: #ffffff;
+  border: 1px solid #dcdcdc;
+  border-radius: 10px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  padding: 25px;
+}
+
+label {
+  font-weight: bold;
+  display: block;
+  margin-bottom: 10px;
+  font-size: 1rem;
+}
+
+input[type="number"], select {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 20px;
+  border: 1px solid #0056b3;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+}
+
+input[type="number"]:focus, select:focus {
+  border-color: #004a99;
+  outline: none;
+}
+
+/* ปุ่ม */
+button {
+  display: block;
+  width: 100%;
+  padding: 12px;
+  background-color: #0056b3;
+  color: #fff;
+  font-size: 1.2rem;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #004a99;
+}
+
+/* ผลลัพธ์ */
+.result-section {
+  margin-top: 20px;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 20px;
+}
+
+.result-section h2 {
+  margin-bottom: 15px;
+  font-size: 1.6rem;
+}
+
+.result-section p {
+  margin: 8px 0;
+  font-size: 1.2rem;
+}
+
+/* การจัดการภาพ */
+.tasaki {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50%;
+  margin: 0 auto;
+}
+
+.tasaki img {
+  width: 12.5%;
+  height: auto;
+  margin: 0 auto;
+}
+
+/* Slider */
+.slider-container {
+  width: 80%;
+  max-width: 600px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.slider-container label {
+  display: block;
+  font-size: 1rem;
+  margin-bottom: 10px;
+  color: #0056b3;
+}
+
+.slider-container input[type="range"] {
+  width: 100%;
+  height: 8px;
+  border-radius: 5px;
+  background: #ddd;
+  outline: none;
+  transition: background 0.3s ease;
+}
+
+.slider-container input[type="range"]:hover {
+  background: #0056b3;
+}
+
+.slider-container span {
+  display: block;
+  margin-top: 10px;
+  font-size: 1.1rem;
+  color: #0056b3;
+}
+
+#result {
+  margin-top: 20px;
+}
+
+#result p {
+  font-size: 1.1rem;
+  margin: 5px 0;
+}
+
+/* ปรับตำแหน่งปุ่มกลางวัน/กลางคืน */
+.top-bar {
+  display: flex;
+  justify-content: space-between; /* แบ่งพื้นที่ให้ซ้าย-ขวา */
+  align-items: center;
+  padding: 10px;
+}
+
+.day-night-toggle .night-mode-btn {
+  background-color: #0056b3;
+  color: #333;
+  font-size: 18px;
+  border: 2px solid #333;
+  border-radius: 12px;
+  padding: 5px 10px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+/* เมื่อโหมดกลางคืน */
+body.night-mode .night-mode-btn {
+  background-color: #333;
+  color: #fff;
+}
+
+/* เปลี่ยนแสงของปุ่มเมื่อวางเมาส์ */
+.day-night-toggle .night-mode-btn:hover {
+  background-color: #f1f1f1;
+}
+
+/* ปรับการตั้งค่าทั่วไปของ body สำหรับโหมดกลางคืน */
+body.night-mode {
+  background-color: #121212;
+  color: white;
+}
+
+body.night-mode .form-section, body.night-mode .result-section {
+  background-color: #1e1e1e;
+  color: rgb(255, 255, 255);
+}
+@media (max-width: 480px) {
+  /* ลดขนาดของฟอร์มและเพิ่ม Padding */
+  .form-section {
+    padding: 10px;
+    border-radius: 8px;
+  }
+
+  /* ปรับขนาดตัวอักษรสำหรับหัวข้อ */
+  h1 {
+    font-size: 1.5rem;
+  }
+
+  h2 {
+    font-size: 1.3rem;
+  }
+
+  h4, h5 {
+    font-size: 0.9rem;
+  }
+
+  /* ปรับขนาดข้อความและปุ่ม */
+  p {
+    font-size: 0.9rem;
+  }
+
+  input[type="number"], select {
+    font-size: 0.85rem;
+    padding: 8px;
+    border-radius: 6px;
+  }
+
+  button {
+    font-size: 0.9rem;
+    padding: 10px;
+    border-radius: 6px;
+  }
+
+  /* ปรับขนาด Slider */
+  .slider-container {
+    padding: 15px;
+  }
+
+  .slider-container label {
+    font-size: 0.9rem;
+  }
+
+  .slider-container span {
+    font-size: 0.9rem;
+  }
+
+  /* ปรับขนาดภาพ */
+  .tasaki img {
+    width: 25%;
+  }
+
+  /* การจัดการระยะห่าง */
+  .container {
+    padding: 10px;
+  }
+}
