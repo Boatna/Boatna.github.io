@@ -1,4 +1,4 @@
-// Initialize global AC data
+// กำหนดข้อมูล AC ทั้งหมด
 const acPowerMap = {
   'FWCE13I-AF1M': { power: 826, btu: 12283, condensingUnit: 'CWCE13I-CU1' },
   'FWCE19I-AF1M': { power: 1140, btu: 18083, condensingUnit: 'CWCE19I-CU1' },
@@ -31,10 +31,29 @@ const acPowerMap = {
   'FUNE48I-AF2': { power: 4095, btu: 48109, condensingUnit: 'CHBE48I-CF1R'},
   'FUNE56I-AF2': { power: 5720, btu: 56127, condensingUnit: 'CHBE56I-CF1R'},
   'FUNE60I-AF2': { power: 6544, btu: 60051, condensingUnit: 'CHBE60I-CF1R'},
+  
+  'FIDE13I-AF2': { power: 1045, btu: 13818, condensingUnit: 'CHBE13I-AF1R'},
+  'FIDE18I-AF2': { power: 1425, btu: 18254, condensingUnit: 'CHBE18I-AF1R'},
+  'FIDE24I-AF2': { power: 1978, btu: 24566, condensingUnit: 'CHBE24I-AF1R'},
+  'FIDE30I-AF2': { power: 2447, btu: 30025, condensingUnit: 'CHBE30I-AF1R'},
+  'FIDE30I-AF2': { power: 2805, btu: 30366, condensingUnit: 'CHBE30I-CF1R'},
+  'FIDE36I-AF2': { power: 3111, btu: 36508, condensingUnit: 'CHBE36I-AF1R'},
+  'FIDE36I-AF2': { power: 3493, btu: 36337, condensingUnit: 'CHBE36I-CF1R'},
+  'FIDE40I-AF2': { power: 4438, btu: 40602, condensingUnit: 'CHBE40I-AF1R'},
+  'FIDE40I-AF2': { power: 4030, btu: 40261, condensingUnit: 'CHBE40I-CF1R'},
+  'FIDE44I-AF2': { power: 3555, btu: 44014, condensingUnit: 'CHBE44I-CF1R'},
+  'FIDE48I-AF2': { power: 4090, btu: 48109, condensingUnit: 'CHBE48I-CF1R'},
+  'FIDE56I-AF2': { power: 5715, btu: 56127, condensingUnit: 'CHBE56I-CF1R'},
+  'FIDE60I-AF2': { power: 6545, btu: 60051, condensingUnit: 'CHBE60I-CF1R'},
 };
 
-// Dynamic dropdown change function
-  // Define sets of options
+// สลับระหว่างโหมดกลางวันและกลางคืน
+function toggleDayNight() {
+  document.body.classList.toggle('night-mode');
+}
+
+
+// ฟังก์ชันสำหรับการเปลี่ยนแปลงตัวเลือกใน Dropdown
   const sets = {
     set1: [
       { value: '', text: '-- กรุณาเลือก --' },
@@ -67,13 +86,28 @@ const acPowerMap = {
       { value: 'FUNE48I-AF2', text: 'FUNE48I-AF2' },
       { value: 'FUNE56I-AF2', text: 'FUNE56I-AF2' },
       { value: 'FUNE60I-AF2', text: 'FUNE60I-AF2' },
-    ]
+    ],
+    set4: [
+      { value: '', text: '-- กรุณาเลือก --' },
+      { value: 'FIDE13I-AF2', text: 'FIDE13I-AF2' },
+      { value: 'FIDE18I-AF2', text: 'FIDE18I-AF2' },
+      { value: 'FIDE24I-AF2', text: 'FIDE24I-AF2' },
+      { value: 'FIDE30I-AF2', text: 'FIDE30I-AF2' },
+      { value: 'FIDE30I-AF2', text: 'FIDE30I-AF2' },
+      { value: 'FIDE36I-AF2', text: 'FIDE36I-AF2' },
+      { value: 'FIDE40I-AF2', text: 'FIDE40I-AF2' },
+      { value: 'FIDE40I-AF2', text: 'FIDE40I-AF2' },
+      { value: 'FIDE44I-AF2', text: 'FIDE44I-AF2' },
+      { value: 'FIDE48I-AF2', text: 'FIDE48I-AF2' },
+      { value: 'FIDE56I-AF2', text: 'FIDE56I-AF2' },
+      { value: 'FIDE60I-AF2', text: 'FIDE60I-AF2' },
+    ],
   };
 
-// Function to change dropdown options dynamically
+// ฟังก์ชันสำหรับเปลี่ยนตัวเลือกใน dropdown ตามเซ็ตที่เลือก
 function changeDropdown(set) {
   const acType = document.getElementById('acType');
-  acType.innerHTML = ''; // Clear previous options
+  acType.innerHTML = '';// ลบตัวเลือกเก่าออก
 
   const selectedSet = sets[set];
   selectedSet.forEach(option => {
@@ -83,23 +117,23 @@ function changeDropdown(set) {
     acType.appendChild(opt);
   });
 
-  calculate(); // Recalculate when dropdown changes
+  calculate(); // คำนวณใหม่เมื่อเลือก dropdown เปลี่ยน
 }
 
-// Event listener for AC system type change
+// ตัวจับเหตุการณ์สำหรับการเปลี่ยนแปลงประเภทของระบบ AC
 function handleSetChange() {
   const selectedSet = document.getElementById('acSystemType').value;
   changeDropdown(selectedSet);
 }
 
-// Function to calculate based on selected AC model and solar panel power
+// ฟังก์ชันคำนวณพลังงานและจำนวนแผงโซลาร์เซลล์ที่จำเป็น
 function calculate() {
   const selectedModel = document.getElementById("acType").value;
 
-  // Get the selected AC unit data from the map
+  // ดึงข้อมูลจากแผนที่ของ AC
   const acData = acPowerMap[selectedModel];
   
-  // Get the selected solar panel power from the slider
+   // ดึงค่าพลังงานแผงโซลาร์เซลล์จากสไลเดอร์
   const solarPanelPower = parseInt(document.getElementById('solarPanelSlider').value);
 
   let minPanels = 0;
@@ -108,10 +142,10 @@ function calculate() {
   let btu = 0;
   let totalSolarPower = 0;
   let savingPercentage = 0;
-  let condensingUnit = ''; // Variable to hold condensing unit data
+  let condensingUnit = ''; // ตัวแปรสำหรับเก็บข้อมูล condensing unit
 
+  // คำนวณพลังงานและจำนวนแผงโซลาร์เซลล์ที่ต้องการ
   if (acData) {
-    // Calculate power consumption and solar panel requirements
     acPower = acData.power;
     btu = acData.btu;
 
@@ -121,43 +155,41 @@ function calculate() {
     totalSolarPower = maxPanels * solarPanelPower;
     savingPercentage = ((totalSolarPower - acPower) / totalSolarPower) * 100;
 
-    condensingUnit = acData.condensingUnit; // Get the condensing unit for the selected model
+    condensingUnit = acData.condensingUnit; // ดึงข้อมูล condensing unit ของรุ่นที่เลือก
   } else {
-    // Default to 0 if no AC is selected
+    // ถ้าไม่ได้เลือก AC จะแสดงค่า 0
     acPower = 0;
     btu = 0;
     totalSolarPower = 0;
     savingPercentage = 0;
-    condensingUnit = ''; // Reset if no data
+    condensingUnit = ''; // รีเซ็ตหากไม่มีข้อมูล
   }
 
-  // Display results
+  //แสดงผลลัพธ์ที่คำนวณ
   updateResult(minPanels, maxPanels, acPower, btu, totalSolarPower, savingPercentage);
 
-  // Display the condensing unit in the corresponding div
+  // แสดงหน่วยคอนเดนซิ่งใน div ที่เกี่ยวข้อง
   document.getElementById('condensingUnit').textContent = condensingUnit ? `Condensing Unit: ${condensingUnit}` : '';
 }
 
-// Event listener for AC model selection change
+// การตั้งค่า Event Listener สำหรับการเลือกโมเดลเครื่องปรับอากาศ (AC)
 document.getElementById("acType").addEventListener("change", calculate);
 
-// Event listener for solar panel slider change
+// การตั้งค่า Event Listener สำหรับการเปลี่ยนแปลงของสไลด์เดอร์แผงโซลาร์เซลล์
 document.getElementById('solarPanelSlider').addEventListener('input', () => {
   document.getElementById('solarPanelValue').textContent = `${document.getElementById('solarPanelSlider').value} W`;
   calculate();
 });
 
-// Function to update result display
+// อัพเดตผลลัพธ์ที่หน้าจอ
 function updateResult(minPanels, maxPanels, acPower, btu, totalSolarPower, savingPercentage) {
-  document.getElementById("numPanels").textContent = `${minPanels}-${maxPanels} แผ่น`;
+  document.getElementById("numPanels").textContent = `${minPanels}-${maxPanels} (แผ่น)`;
   document.getElementById('acPower').textContent = acPower || '0';
   document.getElementById('btu').textContent = btu || '0';
   document.getElementById('totalSolarPower').textContent = totalSolarPower || '0';
   document.getElementById('savingPercentage').textContent = savingPercentage.toFixed(2) + '%';
 }
-
-
-// Initial setup on page load
+// คำนวณค่าเริ่มต้น
 window.onload = () => {
   changeDropdown('set1');
   calculate();
