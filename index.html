@@ -9,48 +9,58 @@
 </head>
 <body>
   <div class="container">
-    <div class="triangle"></div> 
     <div class="form-section">
-      <img src="tasaki.png" alt="โลโก้ทาซากิ" class="tasaki">
-      <br>
-      <h1>Calculate Solar Hybrid Air</h1>
 
-      <!-- Buttons for changing dropdown content -->
-      <label for="acSystemType">Air Condition Tybe</label>
-  <select id="acSystemType" onchange="changeDropdown(this.value)">
-    <option value="set1">Wall Type</option>
-    <option value="set2">Floor & Ceiling Suspended</option>
-    <option value="set3">4 Ways Ceiling Cassette</option>
-  </select>
-  <h3>Unit Model รุ่น</h3>
-      <label for="acType">Air Condition Model</label>
+      <div class="top-bar">
+        <div class="day-night-toggle">
+          <button class="night-mode-btn" onclick="toggleDayNight()">🌙</button>
+        </div>
+      </div>
+  
+      <img src="tasaki.png" alt="โลโก้ทาซากิ" class="tasaki">
+
+      <br>
+
+      <h1 id="title">Calculate Solar Hybrid Air</h1>
+
+      <label for="acSystemType" id="acLabel">Air Condition Tybe</label>
+      <select id="acSystemType" onchange="changeDropdown(this.value)">
+        <option value="set1">Wall Type</option>
+        <option value="set2">Floor & Ceiling Suspended</option>
+        <option value="set3">4 Ways Ceiling Cassette</option>
+        <option value="set4">Ceiling Concealed</option>
+      </select>
+
+      <h3 id="acModelLabel">Unit Model รุ่น</h3>
+
+      <label for="acType" id="acTypeLabel">Air Condition Model</label>
       <select id="acType" onchange="calculate()">
         <option value="">-- กรุณาเลือก --</option>
         <option value="CWCE13I-AF1M">CWCE13I-AF1M</option>
         <option value="CWCE19I-AF1M">CWCE19I-AF1M</option>
         <option value="CWCE25I-AF1M">CWCE25I-AF1M</option>
       </select>
-        <div id="condensingUnit" style="margin-top: 10px; color: #555;"></div>
       
-      
+      <div id="condensingUnit" style="margin-top: 10px; color: #0056b3;"></div>
+
       <div class="slider-container">
-        <label for="solarPanelSlider">ขนาดแผงโซลาร์เซลล์ (W) </label>
+        <label for="solarPanelSlider" id="solarPanelLabel">ขนาดแผงโซลาร์เซลล์ (W)</label>
         <span id="solarPanelValue">100 W</span>
         <input type="range" id="solarPanelSlider" min="100" max="700" value="100" step="10">
       </div>
-      
+
       <div id="result" class="result-section">
         <h2>ผลการคำนวณ:</h2>
         <p>กำลังไฟฟ้าแอร์ (วัตต์): <span id="acPower">0</span> (วัตต์)</p>
         <p>ปริมาณความเย็น (BTU): <span id="btu">0</span> (BTU)</p>
-        <p>จำนวนแผงโซลาร์เซลล์ที่ต้องใช้ : <span id="numPanels">0</span> (แผ่น)</p>
+        <p>จำนวนแผงโซลาร์เซลล์ที่ต้องใช้ : <span id="numPanels">0</span></p>
         <p>กำลังไฟฟ้ารวมของแผงโซลาร์เซลล์: <span id="totalSolarPower">0</span> (วัตต์)</p>
         <br>
 
         <h4 class="red-note">หมายเหตุ*</h4>
-  <h5>
-    <span class="black-note">แรงดันไฟฟ้าต่ำสุดมากกว่าหรือ = 80 VDC แรงดันไฟฟ้าสูงสุดน้อยกว่าหรือ = 350 VDC และกระแสสูงสุดน้อยกว่า = 14 Amp</span>
-  </h5>
+        <h5>
+          <span class="black-note">แรงดันไฟฟ้าต่ำสุดมากกว่าหรือ = 80 VDC แรงดันไฟฟ้าสูงสุดน้อยกว่าหรือ = 350 VDC และกระแสสูงสุดน้อยกว่า = 14 Amp</span>
+        </h5>
       </div>
     </div>
   </div>
