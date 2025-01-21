@@ -9,6 +9,7 @@
 </head>
 <body>
   <div class="container">
+
     <div class="form-section">
 
       <div class="top-bar">
@@ -16,12 +17,12 @@
           <button class="night-mode-btn" onclick="toggleDayNight()">🌙</button>
         </div>
       </div>
-  
-      <img src="tasaki.png" alt="โลโก้ทาซากิ" class="tasaki">
-
+      <img src="tasaki.png" alt="โลโก้ทาซากิ" class="image-tasaki" style="width: 50%; height: auto; margin-top: 20px; display: block; margin-left: auto; margin-right: auto;">
       <br>
 
-      <h1 id="title">Calculate Solar Hybrid Air</h1>
+      <h1 id="title" style="font-size: 3rem; font-weight: bold; color: #0056b3; text-align: center; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); margin-bottom: 20px;">Calculate Solar Hybrid Air</h1>
+
+      <img id="acImage" src="wall_type_image.png" alt="AC System Image" width="300">
 
       <label for="acSystemType" id="acLabel">Air Condition Tybe</label>
       <select id="acSystemType" onchange="changeDropdown(this.value)">
@@ -55,13 +56,19 @@
         <p>ปริมาณความเย็น (BTU): <span id="btu">0</span> (BTU)</p>
         <p>จำนวนแผงโซลาร์เซลล์ที่ต้องใช้ : <span id="numPanels">0</span></p>
         <p>กำลังไฟฟ้ารวมของแผงโซลาร์เซลล์: <span id="totalSolarPower">0</span> (วัตต์)</p>
+        <p>ประหยัดไฟ: <span id="savingPercentage">0</span></p>
         <br>
 
         <h4 class="red-note">หมายเหตุ*</h4>
         <h5>
           <span class="black-note">แรงดันไฟฟ้าต่ำสุดมากกว่าหรือ = 80 VDC แรงดันไฟฟ้าสูงสุดน้อยกว่าหรือ = 350 VDC และกระแสสูงสุดน้อยกว่า = 14 Amp</span>
         </h5>
+        <br>
+        <a href="https://www.youtube.com/watch?v=FnXTKg83V1w" target="_blank">
+          <button id="videoButton">รับชมวีดีโอเพิ่มเติม</button>
+        </a>        
       </div>
+      <img src="image (54)-Photoroom.png" alt="โลโก้โซล่า" class="image-solar">
     </div>
   </div>
 
