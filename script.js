@@ -107,7 +107,7 @@ function toggleDayNight() {
 // ฟังก์ชันสำหรับเปลี่ยนตัวเลือกใน dropdown ตามเซ็ตที่เลือก
 function changeDropdown(set) {
   const acType = document.getElementById('acType');
-  acType.innerHTML = '';// ลบตัวเลือกเก่าออก
+  acType.innerHTML = ''; // ลบตัวเลือกเก่าออก
 
   const selectedSet = sets[set];
   selectedSet.forEach(option => {
@@ -117,7 +117,23 @@ function changeDropdown(set) {
     acType.appendChild(opt);
   });
 
-  calculate(); // คำนวณใหม่เมื่อเลือก dropdown เปลี่ยน
+  var imageDisplay = document.getElementById("acImage");
+
+  // ใช้ค่า `set` แทน `value`
+  if (set === "set1") {
+      imageDisplay.src = "wall_type_image.png";  // เปลี่ยนภาพตามตัวเลือก
+  } else if (set === "set2") {
+      imageDisplay.src = "floor_ceiling_image.png";
+  } else if (set === "set3") {
+      imageDisplay.src = "4_ways_ceiling_image.png";
+  } else if (set === "set4") {
+      imageDisplay.src = "ceiling_concealed_image.png";
+  }
+
+  // หากไม่มี calculate() ให้เอาออกหรือเพิ่มคำอธิบาย
+  if (typeof calculate === "function") {
+      calculate(); // คำนวณใหม่เมื่อเลือก dropdown เปลี่ยน
+  }
 }
 
 // ตัวจับเหตุการณ์สำหรับการเปลี่ยนแปลงประเภทของระบบ AC
