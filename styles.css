@@ -271,7 +271,20 @@ body.night-mode .form-section, body.night-mode .result-section {
   background-color: #1e1e1e;
   color: rgb(255, 255, 255);
 }
+#chatbotButton {
+  background-color: #28a745;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-top: 10px;
+}
 
+#chatbotButton:hover {
+  background-color: #218838;
+}
 @media (max-width: 680px) {
   /* ลดขนาดของฟอร์มและเพิ่ม Padding */
   .form-section {
@@ -351,5 +364,11 @@ body.night-mode .form-section, body.night-mode .result-section {
   /* การจัดการระยะห่าง */
   .container {
     padding: 10px;
+  }
+  #chatbotButton {
+      font-size: 14px;           /* ขนาดฟอนต์เล็กลง 50% สำหรับมือถือ */
+      padding: 10px 25px;        /* ลดพื้นที่รอบๆ ปุ่มลง 50% */
+      border-radius: 60px;       /* มุมโค้งมนมากขึ้น */
+      width: 50%;                /* ปรับความกว้างของปุ่มให้ลดลง 50% */
   }
 }
