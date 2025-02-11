@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>แชตบอทสำหรับคำถามเกี่ยวกับเครื่องปรับอากาศ</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .chat-container {
+            width: 400px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+        .chat-header {
+            background-color: #007bff;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            font-size: 18px;
+        }
+        .chat-box {
+            flex: 1;
+            padding: 15px;
+            overflow-y: auto;
+            border-bottom: 1px solid #ddd;
+        }
+        .message {
+            margin-bottom: 10px;
+        }
+        .message.user {
+            text-align: right;
+        }
+        .message.bot {
+            text-align: left;
+        }
+        .message-text {
+            display: inline-block;
+            padding: 10px;
+            border-radius: 20px;
+            max-width: 70%;
+        }
+        .message.user .message-text {
+            background-color: #dcf8c6;
+        }
+        .message.bot .message-text {
+            background-color: #e9ecef;
+        }
+        .chat-input {
+            display: flex;
+            padding: 10px;
+            background-color: #f9f9f9;
+        }
+        .chat-input input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            outline: none;
+        }
+        .chat-input button {
+            margin-left: 10px;
+            padding: 10px 15px;
+            border: none;
+            background-color: #007bff;
+            color: white;
+            border-radius: 20px;
+            cursor: pointer;
+        }
+        .chat-input button:hover {
+            background-color: #0056b3;
+        }
+        .suggestions {
+            padding: 10px;
+            background-color: #f9f9f9;
+            text-align: center;
+            border-top: 1px solid #ddd;
+        }
+        .suggestion-button {
+            margin: 5px;
+            padding: 8px 12px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+        }
+        .suggestion-button:hover {
+            background-color: #0056b3;
+        }
+        .training-section {
+            padding: 15px;
+            background-color: #f9f9f9;
+            border-top: 1px solid #ddd;
+            text-align: center;
+        }
+        .training-section input {
+            padding: 10px;
+            margin-right: 10px;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            outline: none;
+        }
+        .training-section button {
+            padding: 10px 15px;
+            border: none;
+            background-color: #28a745;
+            color: white;
+            border-radius: 20px;
+            cursor: pointer;
+        }
+        .training-section button:hover {
+            background-color: #218838;
+        }
+        .training-instructions {
+            font-size: 14px;
+            color: #555;
+            margin-top: 10px;
+            text-align: center;
+        }
+        /* Mobile-friendly adjustments */
+@media (max-width: 680px) {
+    .chat-container {
+        width: 100%;
+        margin: 0 15px;
+    }
+
+    .chat-header {
+        font-size: 16px;
+    }
+
+    .message-text {
+        max-width: 90%;
+    }
+
+    .chat-input input {
+        padding: 8px;
+    }
+
+    .chat-input button {
+        padding: 8px 12px;
+    }
+
+    .suggestion-button {
+        padding: 6px 10px;
+    }
+
+    .training-section input {
+        padding: 8px;
+        margin-right: 8px;
+    }
+
+    .training-section button {
+        padding: 8px 12px;
+    }
+}
+    </style>
+</head>
+<body>
+    <div class="chat-container">
+        <div class="chat-header">แชตบอทสำหรับคำถามเกี่ยวกับเครื่องปรับอากาศ</div>
+        <div class="chat-box" id="chatBox"></div>
+        <div class="chat-input">
+            <input type="text" id="userInput" placeholder="พิมพ์คำถามของคุณ..." />
+            <button onclick="sendMessage()">ส่ง</button>
+        </div>
+        <div class="suggestions">
+            <button class="suggestion-button" onclick="sendSuggestion('เครื่องปรับอากาศไม่เย็น')">เครื่องปรับอากาศไม่เย็น</button>
+            <button class="suggestion-button" onclick="sendSuggestion('เสียงดัง')">เสียงดัง</button>
+            <button class="suggestion-button" onclick="sendSuggestion('ไฟกระพริบ')">ไฟกระพริบ</button>
+            <button class="suggestion-button" onclick="sendSuggestion('ค่าไฟแพง')">ค่าไฟแพง</button>
+            <button class="suggestion-button" onclick="sendSuggestion('ล้างเครื่องปรับอากาศ')">ล้างเครื่องปรับอากาศ</button>
+        </div>
+    </div>
+
+    <script>
+        const responses = {
+    "เครื่องปรับอากาศไม่เย็น": "กรุณาตรวจสอบว่าตั้งอุณหภูมิถูกต้องหรือไม่ และทำความสะอาดไส้กรองอากาศเป็นประจำ",
+    "เสียงดัง": "อาจเกิดจากคอมเพรสเซอร์หรือพัดลมภายใน ควรเรียกช่างมาตรวจสอบ",
+    "ไฟกระพริบ": "อาจเกิดจากปัญหาทางไฟฟ้าหรือเซ็นเซอร์ตรวจจับความผิดปกติ ลองปิดแล้วเปิดใหม่ หากยังคงมีปัญหา ให้ติดต่อศูนย์บริการ",
+    "ค่าไฟแพง": "ควรตรวจสอบว่าใช้งานในโหมดประหยัดพลังงานหรือไม่ และหลีกเลี่ยงการตั้งอุณหภูมิต่ำเกินไป",
+    "ล้างเครื่องปรับอากาศ": "แนะนำให้ล้างเครื่องปรับอากาศทุก 3-6 เดือน เพื่อประสิทธิภาพการทำงานที่ดีและลดการสะสมของฝุ่น",
+    "เครื่องปรับอากาศโซล่าเซลล์": "เครื่องปรับอากาศโซล่าเซลล์ทำงานโดยใช้พลังงานจากแผงโซล่าเซลล์ ซึ่งช่วยประหยัดพลังงานและเหมาะสมสำหรับพื้นที่ที่มีแสงแดดมาก",
+    "การติดตั้งเครื่องปรับอากาศโซล่าเซลล์": "การติดตั้งเครื่องปรับอากาศโซล่าเซลล์ต้องคำนึงถึงขนาดของแผงโซล่าเซลล์ที่เหมาะสมกับขนาดห้อง และตำแหน่งที่ติดตั้งแผงเพื่อให้ได้รับแสงแดดมากที่สุด",
+    "ข้อดีของเครื่องปรับอากาศโซล่าเซลล์": "เครื่องปรับอากาศโซล่าเซลล์มีข้อดีในเรื่องการประหยัดค่าไฟ เพราะใช้พลังงานจากแสงอาทิตย์และช่วยลดการปล่อยก๊าซคาร์บอนไดออกไซด์",
+    "เครื่องปรับอากาศโซล่าเซลล์กับพลังงานจากไฟฟ้า": "เครื่องปรับอากาศโซล่าเซลล์สามารถทำงานได้ทั้งจากพลังงานโซล่าเซลล์และพลังงานไฟฟ้า หากไม่ได้รับแสงแดดเพียงพอ",
+    "ต้องติดตั้งเยอะ ๆ ถึงจะดีใช่ไหม": " หลาย ๆ คนมักคุ้นชินกับภาพโซล่าเซลล์ที่เป็นฟาร์มโซล่าเซลล์ และภาพบ้านที่มีแผงโซล่าเซลล์อยู่เต็มหลังคา ทำให้เกิดความคิดที่ว่าต้องติดตั้งแผงโซล่าเซลล์เยอะ ๆ ถึงจะดี ถึงจะสามารถใช้งานได้ ซึ่งในความเป็นจริงแล้ว การติดตั้งโซล่าเซลล์ในประริมาณที่เหมาะสมกับการใช้งานของเราจะถือเป็นการดีกว่า ยิ่งไปกว่านั้นในปัจจุบันผู้จำหน่ายหลาย ๆ เจ้า จะมีทีมงานที่นอกจากจะเข้ามาช่วยติดตั้งระบบโซล่าเซลล์ให้เราแล้ว ทางทีมงานเหล่านี้ยังช่วยคำนวณปริมาณอันเหมาะสมกับการใช้งานให้กับเราอีกด้วย ดังนั้นไม่ต้องกังวลว่าเราจะติดเยอะหรือน้อยเกินไป",
+    "ค่าใช้จ่ายเครื่องปรับอากาศโซล่าเซลล์": "ค่าใช้จ่ายเริ่มต้นของเครื่องปรับอากาศโซล่าเซลล์อาจสูงกว่าปกติ แต่จะช่วยประหยัดค่าไฟในระยะยาว",
+    "ติดตั้งโซล่าเซลล์แล้วจะคุ้มค่าไหม": "คำถามนี้เชื่อว่าเป็นคำถามที่ใครหลาย ๆ คนสงสัยและอยากรู้ที่สุด เพราะลงทุนติดตั้งระบบโซล่าเซลล์ทั้งที ถ้าไม่คุ้มค่าจะติดตั้งทำไม ซึ่งผมขอตอบว่า การติดตั้งระบบโซล่าเซลล์มันคุ้มค่าในระยะยาวครับ อันดับแรกเลยคือ ช่วยเปลี่ยนหลังคาที่ว่างเปล่าของบ้านคุณให้มีประโยชน์ขึ้นโดยการนำแสงอาทิตย์มาใช้เป็นพลังงานไฟฟ้าภายในบ้านได้ ทำให้ค่าไฟฟ้าเราลดลงได้ในระยะยาว เนื่องจากอายุการใช้งานของแผงโซล่าเซลล์จะอยู่ที่ประมาณ 25 ปี และโดยส่วนใหญ่มักคืนทุนกันในปีที่ 8 ส่วนปีที่เหลือคือกำไรของเราล้วน ๆ นี่ยังไม่รวมถึงพลังงานไฟฟ้าที่เราใช้เหลือแล้วขายกลับไปให้ทางการไฟฟ้าด้วยนะครับ",
+    "แผงโซล่าเซลล์ อายุการใช้งานนานเท่าไหร่": "โดยทั่วไปถ้าเป็นแผงโซล่าเซลล์ชนิด Crystalline ก็จะมีอายุการใช้งานประมาณ 20 -25 ปี ครับ แต่ไม่ใช่มันจะเสียทันทีแต่จะค่อยๆเสื่อมสภาพลง",
+    "ติดตั้งแผงโซล่าเซลล์บนหลังคากับบนพื้นต่างกันอย่างไร ตรงไหนดีกว่า": "ต่างกันค่าใช้จ่ายละครับ และขึ้นกับว่าคุณมีพื้นที่เหลือเฟือมั้ย และตรงไหนรับแดดดีกว่ากัน",
+    "ถ้าฝนตก จะผลิตไฟฟ้าจากแผงโซล่าเซลล์ได้หรือไม่": "สามารถผลิตได้  อันที่จริงก็เป็นความเข้าใจผิดนะว่าฝนตกแล้วแผงโซล่าเซลล์จะไม่ทำงาน ที่จริงมันก็ทำงานแหล่ะเพียงแค่ได้น้อยกว่าปรกติ ต้องเข้าใจก่อนว่าแผงโซล่าเซลล์รับความเข้มแสงจากดวงอาทิตย์ ไม่ได้รับความร้อนเหมือนเราไปตากผ้า และอันที่จริงหลายคนก็อาจไม่ทราบว่าถ้าอากาศร้อนมากๆแล้วประสิทธิภาพมันยังตกลงอีกต่างหาก คือว่าแผงโซล่าเซลล์ที่เขาผลิตกันมาน่ะครับเขาผลิตบนแสตนดาร์ดที่ว่า ความดัน1.5atm / Temp. 25C แล้วเขาก็เคลมว่าแผงโซล่าเซลล์นี้น่ะจะได้เท่านั้นเท่านี้วัตต์ มันแปลว่าถ้า Tempไม่เป็นไปตามนี้ (25 องศาเซลเซียส) มันก็ไม่ได้ไฟฟ้าตามนี้นะ ขอบอก คือ Temp ยิ่งสูง ประสิทธิภาพจะลดลงไปเรื่อยๆตามองศาที่สูงขึ้นไปกว่า 25องศาเซลเซียส",
+    "เครื่องปรับอากาศแบบอินเวอร์เตอร์": "เครื่องปรับอากาศแบบอินเวอร์เตอร์มีประสิทธิภาพในการปรับอุณหภูมิและประหยัดพลังงานมากกว่าเครื่องปรับอากาศทั่วไป",
+    "เครื่องปรับอากาศแบบอินเวอร์เตอร์ ทำงานอย่างไร": "เครื่องปรับอากาศแบบอินเวอร์เตอร์ทำงานโดยปรับความเย็นของอากาศโดยการปรับความเร็วของมอเตอร์ให้เหมาะสมกับอุณหภูมิที่ต้องการ ทำให้ประหยัดพลังงานมากกว่าเครื่องปรับอากาศทั่วไป",
+    "เครื่องปรับอากาศแบบอินเวอร์เตอร์ ประหยัดพลังงาน": "เครื่องปรับอากาศแบบอินเวอร์เตอร์ประหยัดพลังงานมากกว่าเครื่องปรับอากาศทั่วไป โดยประมาณ 20-30%",
+    "เครื่องปรับอากาศแบบอินเวอร์เตอร์ มีข้อดี": "เครื่องปรับอากาศแบบอินเวอร์เตอร์มีข้อดีในเรื่องการปรับอุณหภูมิและประหยัดพลังงานมากกว่าเครื่องปรับอากาศทั่วไป",
+    "เครื่องปรับอากาศแบบอินเวอร์เตอร์ มีข้อเสีย": "เครื่องปรับอากาศแบบอินเวอร์เตอร์มีราคาสูงกว่าเครื่องปรับอากาศทั่วไป",
+    "เครื่องปรับอากาศแบบอินเวอร์เตอร์ มีราคาสูง": "เครื่องปรับอากาศแบบอินเวอร์เตอร์มีราคาสูงกว่าเครื่องปรับอากาศทั่วไป แต่ประหยัดพลังงานมากกว่า",
+    "เครื่องปรับอากาศแบบอินเวอร์เตอร์ มีราคาแพง": "เครื่องปรับอากาศแบบอินเวอร์เตอร์มีราคาสูงกว่าเครื่องปรับอากาศทั่วไป แต่ประหยัดพลังงานมากกว่า",
+    "เครื่องปรับอากาศแบบอินเวอร์เตอร์ มีราคาแพงกว่า": "เครื่องปรับอากาศแบบอินเวอร์เตอร์มีราคาสูงกว่าเครื่องปรับอากาศทั่วไป แต่ประหยัดพลังงานมากกว่า",
+    "เครื่องปรับอากาศแบบอินเวอร์เตอร์ มีราคาแพงมาก": "เครื่องปรับอากาศแบบอินเวอร์เตอร์มีราคาสูงกว่าเครื่องปรับอากาศทั่วไป แต่ประหยัดพลังงานมากกว่า",
+    "เครื่องปรับอากาศแบบอินเวอร์เตอร์ มีราคาแพงมากกว่า": "เครื่องปรับอากาศแบบอินเวอร์เตอร์มีราคาสูงกว่าเครื่องปรับอากาศทั่วไป แต่ประหยัดพลังงานมากกว่า",
+    "เครื่องปรับอากาศแบบอินเวอร์เตอร์ มีราคาแพงมากกว่าเครื่องปรับอากาศทั่วไป": "เครื่องปรับอากาศแบบอินเวอร์เตอร์มีราคาสูงกว่าเครื่องปรับอากาศทั่วไป แต่ประหยัดพลังงานมากกว่า",
+    "แผงโซล่าเซลล์ใช้กับแอร์บ้านได้มั้ย": " สามารถครับ ใช้ได้กับทุกอย่างล่ะครับ เอาไปสร้างโรงไฟฟ้าพลังงานแสงอาทิตย์ยังได้เลย ว่าแต่มันแค่ต้องใช้เงินเยอะหน่อย",
+    "แผงโซล่าเซลล์ใช้กับแอร์บ้านได้มั้ยครับ": " สามารถครับ ใช้ได้กับทุกอย่างล่ะครับ เอาไปสร้างโรงไฟฟ้าพลังงานแสงอาทิตย์ยังได้เลย ว่าแต่มันแค่ต้องใช้เงินเยอะหน่อย",
+    "default": "ขออภัยค่ะ ฉันไม่เข้าใจคำถามของคุณ กรุณาสอบถามเพิ่มเติมหรือติดต่อเจ้าหน้าที่"
+};
+
+
+        function sendMessage() {
+            const userInput = document.getElementById("userInput");
+            const message = userInput.value.trim();
+            if (!message) return;
+
+            appendMessage(message, "user");
+            userInput.value = "";
+
+            setTimeout(() => {
+                const botResponse = getBotResponse(message);
+                appendMessage(botResponse, "bot");
+            }, 500);
+        }
+
+        function sendSuggestion(suggestion) {
+            appendMessage(suggestion, "user");
+            setTimeout(() => {
+                const botResponse = getBotResponse(suggestion);
+                appendMessage(botResponse, "bot");
+            }, 500);
+        }
+
+        function appendMessage(text, sender) {
+            const chatBox = document.getElementById("chatBox");
+            const messageDiv = document.createElement("div");
+            messageDiv.classList.add("message", sender);
+
+            const messageText = document.createElement("div");
+            messageText.classList.add("message-text");
+            messageText.textContent = text;
+
+            messageDiv.appendChild(messageText);
+            chatBox.appendChild(messageDiv);
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+
+        function calculateSimilarity(input, key) {
+            const inputWords = input.toLowerCase().split(" ");
+            const keyWords = key.toLowerCase().split(" ");
+            const commonWords = inputWords.filter(word => keyWords.includes(word));
+            return (commonWords.length / keyWords.length) * 100;
+        }
+
+        function getBotResponse(userMessage) {
+            userMessage = userMessage.toLowerCase();
+            let bestMatch = null;
+            let highestSimilarity = 0;
+
+            for (const key in responses) {
+                const similarity = calculateSimilarity(userMessage, key);
+                if (similarity >= 80 && similarity > highestSimilarity) {
+                    bestMatch = key;
+                    highestSimilarity = similarity;
+                }
+            }
+
+            if (bestMatch) {
+                return responses[bestMatch];
+            } else {
+                return responses["default"];
+            }
+        }
+    </script>
+</body>
+</html>
