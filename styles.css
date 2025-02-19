@@ -121,6 +121,8 @@ input[type="number"]:focus, select:focus {
 
 /* ปุ่ม */
 button {
+  font-family: 'LT_46521TH', sans-serif; /* ตั้งค่าฟอนต์ */
+  text-decoration: none; /* ลบเส้นใต้ข้อความ */
   display: block;
   width: 100%;
   padding: 12px;
