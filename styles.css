@@ -131,12 +131,17 @@ button {
   font-weight: bold;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  text-decoration: none !important;  /* ลบเส้นใต้ */
+  border: none !important;          /* ลบกรอบ */
 }
 
 button:hover {
   background-color: #004a99;
+  border: none !important;          /* ป้องกันการแสดง border เมื่อ hover */
 }
-
+button:focus {
+  outline: none !important;         /* ป้องกันเส้น outline เมื่อคลิก */
+}
 /* ผลลัพธ์ */
 .result-section {
   margin-top: 20px;
