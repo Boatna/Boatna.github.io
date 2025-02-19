@@ -132,6 +132,9 @@ button {
   font-weight: bold;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  font-family: 'LT_46521TH';
+  src: url('fonts/LT_46521TH.otf') format('opentype');
+  font-display: swap;
 }
 
 button:hover {
