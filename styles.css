@@ -122,15 +122,12 @@ input[type="number"]:focus, select:focus {
 /* ปุ่ม */
 button {
   font-family: 'LT_46521TH', sans-serif; /* ตั้งค่าฟอนต์ */
-  text-decoration: none; /* ลบเส้นใต้ข้อความ */
   display: block;
   width: 100%;
   padding: 12px;
   background-color: #0056b3;
   color: #fff;
   font-size: 1.2rem;
-  border: none;
-  border-radius: 8px;
   font-weight: bold;
   cursor: pointer;
   transition: background-color 0.3s ease;
